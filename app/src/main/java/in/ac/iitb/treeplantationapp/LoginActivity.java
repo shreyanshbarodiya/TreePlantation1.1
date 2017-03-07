@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
+
     }
 
     @Override
@@ -95,10 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONArray result = jsonObject.getJSONArray(LoginConfig.JSON_ARRAY);
                                 JSONObject userData = result.getJSONObject(0);
                                 String res_username  = userData.getString(LoginConfig.KEY_USERNAME);
-                                String res_email  = userData.getString(LoginConfig.KEY_EMAIL);
                                 String res_name  = userData.getString(LoginConfig.KEY_NAME);
-                                String res_ph_no  = userData.getString(LoginConfig.KEY_PH_NO);
-
 
                                 //Creating a shared preference
                                 SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(LoginConfig.SHARED_PREF_NAME, Context.MODE_PRIVATE);
