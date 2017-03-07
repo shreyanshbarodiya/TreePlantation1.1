@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TreePlantationApp</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="url_main">http://192.168.1.2/treePlantation/</string>
+
+</resources>
