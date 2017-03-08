@@ -4,15 +4,24 @@ package in.ac.iitb.treeplantationapp.Models;
 public class ReviewModel {
     String tree_id, review_text, reviewed_by, reviewed_on, title;
     int review_no;
+    Double review_stars;
 
+    public Double getReview_stars() {
+        return review_stars;
+    }
 
-    public ReviewModel(String tree_id, String review_text, String reviewed_by, String reviewed_on, String title, int review_no) {
+    public void setReview_stars(Double review_stars) {
+        this.review_stars = review_stars;
+    }
+
+    public ReviewModel(String tree_id, String review_text, String reviewed_by, String reviewed_on, String title, int review_no, Double review_stars ) {
         this.tree_id = tree_id;
         this.review_text = review_text;
         this.reviewed_by = reviewed_by;
         this.reviewed_on = reviewed_on;
         this.title = title;
         this.review_no = review_no;
+        this.review_stars = review_stars;
     }
 
     public String getTree_id() {

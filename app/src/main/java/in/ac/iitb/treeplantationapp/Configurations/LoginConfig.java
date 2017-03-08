@@ -2,9 +2,11 @@ package in.ac.iitb.treeplantationapp.Configurations;
 
 public class LoginConfig {
 
-    private static final String URL_MAIN = "http://192.168.0.115/treePlantation/";
-    public static final String LOGIN_URL =  URL_MAIN + "userLogin.php";
-    public static final String REGISTER_URL = URL_MAIN +  "registerUser.php";
+    public static String URL_SERVER = "192.168.0.103";
+    public static String URL_MAIN = "http://" + URL_SERVER + "/treePlantation/";
+
+    public static String LOGIN_URL =  URL_MAIN + "userLogin.php";
+    public static String REGISTER_URL = URL_MAIN +  "registerUser.php";
 
     //Keys for email and password as defined in our $_POST['key'] in login.php
 

@@ -33,6 +33,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -58,14 +60,13 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
     private Location currLocation;
     private ArrayList<PlantedTreeModel> plantedTrees;
     private String selectedTreeId;
+    private Location centerLocation;
+    private LatLng centerLatLng;
+
+    boolean isMapMoved;
+    boolean mapMadeForFirstTime;
 
     private GoogleMap mMap;
-
-/*    private View mMarkerParentView;
-    private ImageView mMarkerImageView;
-
-    private int centerX = -1;
-    private int centerY = -1;*/
 
     LocationManager lm;
 
@@ -79,19 +80,20 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         currLocation = getLastKnownLocation();
+        centerLocation = currLocation;
+        isMapMoved = false;
+        mapMadeForFirstTime = true;
+
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.spotTreesNearby);
 
-        //incorrectly assigned -- TODO
-/*        mMarkerParentView = findViewById(R.id.marker_view_incl);
-        mMarkerImageView = (ImageView) findViewById(R.id.marker_icon_view);*/
 
         Button btnDetails = (Button) findViewById(R.id.btnDetails);
         btnDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(selectedTreeId.isEmpty()){
+                if(selectedTreeId==null){
                     Toast.makeText(NearbyTreesMap.this, "Select a tree first", Toast.LENGTH_SHORT).show();
                 }else{
                     showDetails(selectedTreeId);
@@ -99,7 +101,6 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
             }
         });
     }
-
 
 
     @Override
@@ -111,7 +112,8 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
             googleMap.addMarker(new MarkerOptions().
                     position(latLng).
                     title(currPlantedTree.getSpecies()).
-                    snippet(currPlantedTree.getTree_id())
+                    snippet(currPlantedTree.getTree_id()).
+                    icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
             );
         }
 
@@ -124,22 +126,55 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
             }
         });
 
-        currLocation = getLastKnownLocation();
-        if (currLocation != null)
+        if (centerLocation != null)
         {
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currLocation.getLatitude(), currLocation.getLongitude()), 13));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(centerLocation.getLatitude(), centerLocation.getLongitude()), 15));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(currLocation.getLatitude(), currLocation.getLongitude()))
+                    .target(new LatLng(centerLocation.getLatitude(), centerLocation.getLongitude()))
                     .zoom(17)
                     .bearing(0)
                     .tilt(40)
                     .build();
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            if(mapMadeForFirstTime){
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
         }else{
             Toast.makeText(NearbyTreesMap.this, "Error in getting your location", Toast.LENGTH_LONG).show();
         }
         mMap = googleMap;
+
+
+        mMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
+            @Override
+            public void onCameraMoveStarted(int reason) {
+                if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+                    isMapMoved = true;
+                    mapMadeForFirstTime = false;
+                }
+            }
+        });
+
+        mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+                centerLatLng = mMap.getCameraPosition().target;
+                centerLocation.setLatitude(centerLatLng.latitude);
+                centerLocation.setLongitude(centerLatLng.longitude);
+
+            }
+        });
+
+        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                if(isMapMoved){
+                    isMapMoved = false;
+                    getNearbyTreeLocations(centerLocation);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -155,6 +190,7 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
         }
 
     }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

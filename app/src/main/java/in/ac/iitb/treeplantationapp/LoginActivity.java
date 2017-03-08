@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ import in.ac.iitb.treeplantationapp.Configurations.LoginConfig;
 
 public class LoginActivity extends AppCompatActivity {
 
+    EditText etServer;
+
     EditText etUsername;
     EditText etPassword;
     Button btnSignIn;
@@ -46,16 +49,19 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
         tvRegister = (TextView) findViewById(R.id.tvRegister);
+        etServer = (EditText) findViewById(R.id.etServer);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginConfig.URL_SERVER = etServer.getText().toString();
                 login();
             }
         });
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginConfig.URL_SERVER = etServer.getText().toString();
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterUser.class);
                 startActivity(registerIntent);
             }

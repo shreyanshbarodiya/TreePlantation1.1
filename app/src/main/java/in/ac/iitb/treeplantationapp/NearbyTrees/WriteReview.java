@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class WriteReview extends AppCompatActivity {
     EditText etDate, etTitle, etReviewText;
     private Calendar myCalendar;
     Button btnAddReview;
+    RatingBar ratingReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class WriteReview extends AppCompatActivity {
         etTitle = (EditText) findViewById(R.id.etTitle);
         etReviewText = (EditText) findViewById(R.id.etReviewText);
         btnAddReview = (Button) findViewById(R.id.btnAddReview);
+        ratingReview = (RatingBar) findViewById(R.id.ratingReview);
+        ratingReview.setNumStars(5);
 
         SharedPreferences sharedPreferences = getSharedPreferences(LoginConfig.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         username = sharedPreferences.getString(LoginConfig.USERNAME_SHARED_PREF,"Not Available");
@@ -88,6 +93,7 @@ public class WriteReview extends AppCompatActivity {
                 submitReview();
             }
         });
+
 
     }
 
@@ -145,6 +151,7 @@ public class WriteReview extends AppCompatActivity {
                 params.put(NearbyTreeConfig.KEY_REVIEW_TEXT, etReviewText.getText().toString());
                 params.put(NearbyTreeConfig.KEY_REVIEW_DATE, etDate.getText().toString());
                 params.put(NearbyTreeConfig.KEY_TITLE, etTitle.getText().toString());
+                params.put(NearbyTreeConfig.KEY_REVIEW_RATINGS, Float.toString(ratingReview.getRating()));
 
                 return params;
             }

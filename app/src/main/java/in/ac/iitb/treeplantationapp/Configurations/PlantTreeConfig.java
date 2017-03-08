@@ -2,9 +2,9 @@ package in.ac.iitb.treeplantationapp.Configurations;
 
 
 public class PlantTreeConfig {
-    private static final String URL_MAIN = "http://192.168.0.115/treePlantation/";
+    private static String URL_MAIN = LoginConfig.URL_MAIN;
 
-    public static final String PLANT_TREE_URL = URL_MAIN + "plantTree.php";
+    public static String PLANT_TREE_URL = URL_MAIN + "plantTree.php";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_LATITUDE = "latitude";

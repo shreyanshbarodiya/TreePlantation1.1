@@ -68,8 +68,9 @@ public class SeeReviews extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 ReviewModel review = reviewList.get(i);
                 alertDialogBuilder.setTitle(String.valueOf(review.getReview_no()) + ". " + review.getTitle())
-                        .setMessage("reviewed on - " + review.getReviewed_on() + "\n" +
-                                    "reviewed by - " + review.getReviewed_by() + "\n" +
+                        .setMessage(" " + review.getReview_stars() + " stars\n " +
+                                    "Date     - " + review.getReviewed_on() + "\n " +
+                                    "Reviewer - " + review.getReviewed_by() + "\n " +
                                      review.getReview_text());
 
                 alertDialogBuilder.setNegativeButton("Back",
@@ -101,6 +102,7 @@ public class SeeReviews extends AppCompatActivity {
                                 jsonObject = new JSONObject(response);
                                 JSONArray result = jsonObject.getJSONArray(NearbyTreeConfig.JSON_ARRAY);
 
+                                Log.i("myTag", response);
                                 for(int i = 0; i<result.length(); i++){
                                     JSONObject jo = result.getJSONObject(i);
 
@@ -109,13 +111,14 @@ public class SeeReviews extends AppCompatActivity {
                                     String RES_REVIEW_TEXT = jo.getString(NearbyTreeConfig.KEY_REVIEW_TEXT);
                                     String RES_REVIEW_DATE = jo.getString(NearbyTreeConfig.KEY_REVIEW_DATE);
                                     String RES_TITLE = jo.getString(NearbyTreeConfig.KEY_TITLE);
+                                    Double RES_REVIEW_STARS = jo.getDouble(NearbyTreeConfig.KEY_REVIEW_RATINGS);
                                     int RES_REVIEW_NO = jo.getInt(NearbyTreeConfig.KEY_REVIEW_NO);
 
-                                    ReviewModel review = new ReviewModel(RES_TREE_ID, RES_REVIEW_TEXT, RES_REVIEWED_BY, RES_REVIEW_DATE, RES_TITLE, RES_REVIEW_NO );
+                                    ReviewModel review = new ReviewModel(RES_TREE_ID, RES_REVIEW_TEXT, RES_REVIEWED_BY, RES_REVIEW_DATE, RES_TITLE, RES_REVIEW_NO, RES_REVIEW_STARS );
                                     reviewList.add(review);
 
-                                    list.add(String.valueOf(RES_REVIEW_NO) + ". " + RES_TITLE + "\n" +
-                                                RES_REVIEW_TEXT);
+                                    list.add(String.valueOf(RES_REVIEW_NO) + ". " + RES_TITLE + "\n " +
+                                            String.valueOf(RES_REVIEW_STARS) + "\n " + RES_REVIEW_DATE);
                                 }
 
                                 ListAdapter listAdapter = new ArrayAdapter<>(SeeReviews.this,android.R.layout.simple_list_item_1,reviewTextList);
