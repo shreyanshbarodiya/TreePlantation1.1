@@ -2,7 +2,7 @@ package in.ac.iitb.treeplantationapp.Configurations;
 
 
 public class PlantTreeConfig {
-    private static String URL_MAIN = LoginConfig.URL_MAIN;
+    public static String URL_MAIN = LoginConfig.URL_MAIN;
 
     public static String PLANT_TREE_URL = URL_MAIN + "plantTree.php";
 
@@ -17,4 +17,8 @@ public class PlantTreeConfig {
 
     public static final String PLANTED_SUCCESS = "Success";
 
+    public static void setUrlMain(String url){
+        URL_MAIN = url;
+        PLANT_TREE_URL = url+ "plantTree.php";
+    }
 }

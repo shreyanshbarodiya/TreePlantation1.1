@@ -54,14 +54,17 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginConfig.URL_SERVER = etServer.getText().toString();
+                LoginConfig.setUrlServer(etServer.getText().toString());
+                //LoginConfig.URL_SERVER = etServer.getText().toString();
+                Log.i("myTag", LoginConfig.LOGIN_URL);
                 login();
             }
         });
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginConfig.URL_SERVER = etServer.getText().toString();
+                LoginConfig.setUrlServer(etServer.getText().toString());
+                //LoginConfig.URL_SERVER = etServer.getText().toString();
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterUser.class);
                 startActivity(registerIntent);
             }

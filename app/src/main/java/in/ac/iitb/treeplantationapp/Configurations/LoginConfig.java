@@ -40,4 +40,13 @@ public class LoginConfig {
     //Name of the JSON array created by server in the response
     public static final String JSON_ARRAY = "result";
 
+    public static void setUrlServer(String url){
+        URL_SERVER = url;
+        URL_MAIN = "http://" + url + "/treePlantation/";
+        LOGIN_URL =  URL_MAIN + "userLogin.php";
+        REGISTER_URL = URL_MAIN+  "registerUser.php";
+        NearbyTreeConfig.setUrlMain(URL_MAIN);
+        PlantTreeConfig.setUrlMain(URL_MAIN);
+    }
+
 }

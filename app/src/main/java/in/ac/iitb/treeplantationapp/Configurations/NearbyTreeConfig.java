@@ -51,4 +51,16 @@ public class NearbyTreeConfig {
     public static final String REVIEW_FAILURE = "failure";
 
     public static final String JSON_ARRAY = "result";
+
+    public static void setUrlMain(String url){
+        URL_MAIN = url;
+        NEARBY_TREES_URL = url + "getNearbyTrees.php";
+        TREE_DETAILS_URL = url + "getTreeDetails.php";
+        WRITE_REVIEW_URL = url + "writeReview.php";
+        SEE_REVIEWS_URL =  url + "seeReviews.php";
+        UPLOAD_URL =  url + "uploadImages.php";
+        DIRECTORY_URL = url + "treeDirectory.php";
+        IMAGES_URL = url + "getImagesUrl.php";
+        ADOPT_TREE_URL = url + "adoptTree.php";
+    }
 }
