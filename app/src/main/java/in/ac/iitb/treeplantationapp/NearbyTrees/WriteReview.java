@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import in.ac.iitb.treeplantationapp.Configurations.LoginConfig;
 import in.ac.iitb.treeplantationapp.Configurations.NearbyTreeConfig;
+import in.ac.iitb.treeplantationapp.Configurations.NotificationConfig;
 import in.ac.iitb.treeplantationapp.Models.PlantedTreeModel;
 import in.ac.iitb.treeplantationapp.R;
 
@@ -124,10 +126,10 @@ public class WriteReview extends AppCompatActivity {
                         loading.dismiss();
                         if(response.trim().equals(NearbyTreeConfig.REVIEWED_SUCCESS)){
                             Toast.makeText(WriteReview.this, "Successfully added review", Toast.LENGTH_LONG).show();
-                            String[] detailsArray = {tree.getTree_id(),username,
+                            String[] detailsArray = {tree.getTree_id(),tree.getUsername(),
                                                     String.valueOf(tree.getLatitude()), String.valueOf(tree.getLongitude()),
                                                     tree.getPlanted_on(), tree.getSpecies()};
-                            notifyOwnersAboutReview(tree.getTree_id());
+                            notifyOwnerAboutReview(tree.getTree_id(), tree.getSpecies(), username);
                             startActivity(addExtrasToIntent(detailsArray, SeeReviews.class));
                         }
                         else{
@@ -163,8 +165,38 @@ public class WriteReview extends AppCompatActivity {
 
     }
 
-    private void notifyOwnersAboutReview(String tree_id) {
+    private void notifyOwnerAboutReview(final String tree_id, final String species, final String u_name) {
+        final ProgressDialog progressDialog = ProgressDialog.show(this,"Notifying owner...","Please wait...",false,false);
 
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, NotificationConfig.URL_SEND_MULTIPLE_PUSH,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        Log.i("myTag", response);
+                        //Toast.makeText(ActivitySendPushNotification.this, response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("myTag", "error");
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("tree_id", tree_id.trim());
+                params.put("title", "Tree Reviewed");
+                params.put("message", "Your tree " + species + " was reviewed by: " + u_name);
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private Intent addExtrasToIntent(String[] detailsArray, Class<?> classObject) {

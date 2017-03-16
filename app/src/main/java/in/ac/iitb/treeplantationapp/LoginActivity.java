@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.ac.iitb.treeplantationapp.Configurations.LoginConfig;
+import in.ac.iitb.treeplantationapp.Configurations.NotificationConfig;
+import in.ac.iitb.treeplantationapp.Notifications.SharedPrefManager;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -116,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString(LoginConfig.NAME_SHARED_PREF, res_name);
                                 editor.apply();
 
+                                sendTokenToServer(res_username);
                                 Intent intent = new Intent(LoginActivity.this, UserProfile.class);
                                 startActivity(intent);
 
@@ -151,6 +154,52 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+    //storing token to mysql server
+    private void sendTokenToServer(final String username) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registering Device...");
+        progressDialog.show();
+
+        final String token = SharedPrefManager.getInstance(this).getDeviceToken();
+
+        if (token == null) {
+            progressDialog.dismiss();
+            Toast.makeText(this, "Token not generated", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, NotificationConfig.URL_REGISTER_DEVICE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        Log.i("myTag", response);
+/*                        try {
+                            JSONObject obj = new JSONObject(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }*/
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Log.i("myTag", "error");
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("token", token);
+                return params;
+            }
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }

@@ -105,6 +105,7 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
         for(int i=0; i< plantedTrees.size(); i++){
             PlantedTreeModel currPlantedTree = plantedTrees.get(i);
@@ -142,7 +143,6 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
         }else{
             Toast.makeText(NearbyTreesMap.this, "Error in getting your location", Toast.LENGTH_LONG).show();
         }
-        mMap = googleMap;
 
 
         mMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {

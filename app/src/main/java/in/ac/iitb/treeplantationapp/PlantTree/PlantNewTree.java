@@ -37,10 +37,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -84,6 +86,7 @@ public class PlantNewTree extends AppCompatActivity implements MapWrapperLayout.
     String provider;
 
     LocationListener locationListener;
+    CustomMapFragment mCustomMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,10 @@ public class PlantNewTree extends AppCompatActivity implements MapWrapperLayout.
         setContentView(R.layout.activity_plant_new_tree);
 
         initializeUI();
+
+        mCustomMapFragment = ((CustomMapFragment) getFragmentManager().findFragmentById(R.id.map));
+        mCustomMapFragment.setOnDragListener(PlantNewTree.this);
+        mCustomMapFragment.getMapAsync(this);
 
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
@@ -220,13 +227,13 @@ public class PlantNewTree extends AppCompatActivity implements MapWrapperLayout.
     }
 
     private void initializeMap() {
+        mCustomMapFragment.getMapAsync(this);
+
         if (googleMap == null) {
-            CustomMapFragment mCustomMapFragment = ((CustomMapFragment) getFragmentManager()
-                    .findFragmentById(R.id.map));
-            mCustomMapFragment.setOnDragListener(PlantNewTree.this);
             mCustomMapFragment.getMapAsync(this);
 
             if (googleMap == null) {
+                mCustomMapFragment.getMapAsync(this);
                 Toast.makeText(getApplicationContext(),
                         "Creating maps", Toast.LENGTH_SHORT)
                         .show();
@@ -238,7 +245,7 @@ public class PlantNewTree extends AppCompatActivity implements MapWrapperLayout.
     @Override
     protected void onResume() {
         super.onResume();
-
+        mCustomMapFragment.getMapAsync(this);
     }
 
     @Override
@@ -314,8 +321,9 @@ public class PlantNewTree extends AppCompatActivity implements MapWrapperLayout.
             //criteria.setAccuracy(Criteria.ACCURACY_COARSE);
             lm.requestLocationUpdates(provider,0,0, locationListener);
             currLocation = getLastKnownLocation();
-            Log.i("myTag","onMapReady came here");
         }
+
+        Log.i("myTag","onMapReady came here");
 
         if (currLocation != null)
         {

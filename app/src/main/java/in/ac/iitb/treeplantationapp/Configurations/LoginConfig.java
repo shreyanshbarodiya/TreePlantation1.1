@@ -2,7 +2,7 @@ package in.ac.iitb.treeplantationapp.Configurations;
 
 public class LoginConfig {
 
-    public static String URL_SERVER = "192.168.0.103";
+    public static String URL_SERVER = "192.168.0.106";
     public static String URL_MAIN = "http://" + URL_SERVER + "/treePlantation/";
 
     public static String LOGIN_URL =  URL_MAIN + "userLogin.php";
@@ -47,6 +47,7 @@ public class LoginConfig {
         REGISTER_URL = URL_MAIN+  "registerUser.php";
         NearbyTreeConfig.setUrlMain(URL_MAIN);
         PlantTreeConfig.setUrlMain(URL_MAIN);
+        NotificationConfig.setUrlMain(URL_MAIN);
     }
 
 }

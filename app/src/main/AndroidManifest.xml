@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.ac.iitb.treeplantationapp">
 
+    <permission android:name="in.ac.iitb.treeplantationapp.PlantTree.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+
+    <uses-permission android:name="in.ac.iitb.treeplantationapp.PlantTree.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,15 +31,25 @@
         <activity android:name=".PlantTree.PlantNewTree" />
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value=" AIzaSyCMx0T7W3-zQnzDIk057vU5Cma8HSRiw6w" />
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCrykvInhSH9p-YTs6GsSigVqZKRubtNAQ " />
 
         <activity android:name=".NearbyTrees.NearbyTreesMap" />
         <activity android:name=".NearbyTrees.TreeDetail" />
         <activity android:name=".NearbyTrees.WriteReview" />
         <activity android:name=".NearbyTrees.SeeReviews" />
         <activity android:name=".Images.TreeGallery" />
-        <activity android:name=".Images.TreeImages"></activity>
+        <activity android:name=".Images.TreeImages"/>
+        <service android:name=".Notifications.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Notifications.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
