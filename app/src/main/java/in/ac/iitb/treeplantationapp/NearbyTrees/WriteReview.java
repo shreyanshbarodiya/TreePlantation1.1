@@ -127,6 +127,7 @@ public class WriteReview extends AppCompatActivity {
                             String[] detailsArray = {tree.getTree_id(),username,
                                                     String.valueOf(tree.getLatitude()), String.valueOf(tree.getLongitude()),
                                                     tree.getPlanted_on(), tree.getSpecies()};
+                            notifyOwnersAboutReview(tree.getTree_id());
                             startActivity(addExtrasToIntent(detailsArray, SeeReviews.class));
                         }
                         else{
@@ -159,6 +160,10 @@ public class WriteReview extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
+    }
+
+    private void notifyOwnersAboutReview(String tree_id) {
 
     }
 
