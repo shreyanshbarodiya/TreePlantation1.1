@@ -45,6 +45,7 @@ public class UserProfile extends AppCompatActivity
 
     Button btnPlant;
     Button btnSeeNearbyTrees;
+    Button btnScanQR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class UserProfile extends AppCompatActivity
         });
 
         btnPlant = (Button) findViewById(R.id.btnPlant);
+        btnScanQR = (Button) findViewById(R.id.btnScanQR);
         btnSeeNearbyTrees = (Button) findViewById(R.id.btnSeeNearbyTrees);
 
         SharedPreferences sharedPreferences = getSharedPreferences(LoginConfig.SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -97,6 +99,14 @@ public class UserProfile extends AppCompatActivity
             public void onClick(View view) {
                 Intent reviewIntent = new Intent(UserProfile.this, NearbyTreesMap.class);
                 startActivity(reviewIntent);
+            }
+        });
+
+        btnScanQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent scanQRIntent = new Intent(UserProfile.this, ScanQRCode.class);
+                startActivity(scanQRIntent);
             }
         });
     }

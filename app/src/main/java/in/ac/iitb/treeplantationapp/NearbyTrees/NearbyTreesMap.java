@@ -70,6 +70,8 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
 
     LocationManager lm;
 
+    Button btnDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +91,7 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
                 .findFragmentById(R.id.spotTreesNearby);
 
 
-        Button btnDetails = (Button) findViewById(R.id.btnDetails);
+        btnDetails = (Button) findViewById(R.id.btnDetails);
         btnDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +102,7 @@ public class NearbyTreesMap extends FragmentActivity implements OnMapReadyCallba
                 }
             }
         });
+
     }
 
 
