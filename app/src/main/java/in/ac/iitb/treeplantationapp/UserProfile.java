@@ -1,5 +1,6 @@
 package in.ac.iitb.treeplantationapp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +23,20 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import in.ac.iitb.treeplantationapp.Configurations.LoginConfig;
+import in.ac.iitb.treeplantationapp.Configurations.NotificationConfig;
+import in.ac.iitb.treeplantationapp.Notifications.SharedPrefManager;
 import in.ac.iitb.treeplantationapp.PlantTree.PlantNewTree;
 import in.ac.iitb.treeplantationapp.NearbyTrees.NearbyTreesMap;
 
@@ -123,7 +138,8 @@ public class UserProfile extends AppCompatActivity
     }
 
     private void logout(){
-        //Creating an alert dialog to confirm logout
+        final String token = SharedPrefManager.getInstance(this).getDeviceToken();
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you sure you want to logout?");
         alertDialogBuilder.setPositiveButton("Yes",
@@ -131,6 +147,8 @@ public class UserProfile extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         SharedPreferences preferences = getSharedPreferences(LoginConfig.SHARED_PREF_NAME,Context.MODE_PRIVATE);
+                        String u_name = preferences.getString(LoginConfig.USERNAME_SHARED_PREF,"Not Available");
+                        removeUserToken(token, u_name);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putBoolean(LoginConfig.LOGGEDIN_SHARED_PREF, false);
                         editor.putString(LoginConfig.USERNAME_SHARED_PREF, "");
@@ -152,6 +170,38 @@ public class UserProfile extends AppCompatActivity
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
+    }
+
+    private void removeUserToken(final String token, final String u_name) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Logging out...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, NotificationConfig.URL_REMOVE_DEVICE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        Log.i("myTag", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Log.i("myTag", "error");
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", u_name);
+                params.put("token", token);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

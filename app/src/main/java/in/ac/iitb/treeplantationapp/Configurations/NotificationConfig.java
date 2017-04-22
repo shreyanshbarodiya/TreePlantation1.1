@@ -6,6 +6,7 @@ public class NotificationConfig {
     public static String URL_SEND_SINGLE_PUSH = URL_MAIN + "sendSinglePush.php";
     public static String URL_SEND_MULTIPLE_PUSH = URL_MAIN + "sendMultiplePush.php";
     public static String URL_FETCH_DEVICES = URL_MAIN + "GetRegisteredDevices.php";
+    public static String URL_REMOVE_DEVICE = URL_MAIN + "RemoveDevice.php";
 
 
     public static void setUrlMain(String url) {
@@ -14,5 +15,6 @@ public class NotificationConfig {
         URL_SEND_SINGLE_PUSH = URL_MAIN + "sendSinglePush.php";
         URL_SEND_MULTIPLE_PUSH = URL_MAIN + "sendMultiplePush.php";
         URL_FETCH_DEVICES = URL_MAIN + "GetRegisteredDevices.php";
+        URL_REMOVE_DEVICE = URL_MAIN + "RemoveDevice.php";
     }
 }
