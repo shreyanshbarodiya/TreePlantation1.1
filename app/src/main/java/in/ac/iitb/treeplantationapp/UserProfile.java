@@ -36,6 +36,7 @@ import java.util.Map;
 
 import in.ac.iitb.treeplantationapp.Configurations.LoginConfig;
 import in.ac.iitb.treeplantationapp.Configurations.NotificationConfig;
+import in.ac.iitb.treeplantationapp.NearbyTrees.NearbyTreesInterface;
 import in.ac.iitb.treeplantationapp.Notifications.SharedPrefManager;
 import in.ac.iitb.treeplantationapp.PlantTree.PlantNewTree;
 import in.ac.iitb.treeplantationapp.NearbyTrees.NearbyTreesMap;
@@ -60,6 +61,7 @@ public class UserProfile extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                startActivity(new Intent(UserProfile.this, NearbyTreesInterface.class));
             }
         });
 

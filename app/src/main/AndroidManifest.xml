@@ -53,7 +53,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ScanQRCode"></activity>
+        <activity android:name=".ScanQRCode" />
+        <activity android:name=".NearbyTrees.NearbyTreesInterface"></activity>
     </application>
 
 </manifest>
