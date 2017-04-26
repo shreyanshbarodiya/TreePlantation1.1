@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.ac.iitb.treeplantationapp.Configurations.LoginConfig;
 import in.ac.iitb.treeplantationapp.Configurations.NearbyTreeConfig;
 import in.ac.iitb.treeplantationapp.Models.DirectoryModel;
 import in.ac.iitb.treeplantationapp.R;
@@ -75,8 +76,7 @@ public class TreeImages extends AppCompatActivity {
 
                                     String RES_IMAGE_URL = jo.getString(NearbyTreeConfig.KEY_IMAGE_URL);
 
-                                    imageUrls.add(RES_IMAGE_URL);
-                                    Log.i("myTag", RES_IMAGE_URL);
+                                    imageUrls.add(LoginConfig.URL_MAIN + RES_IMAGE_URL);
                                 }
                                 adapter = new AdapterImages(TreeImages.this, imageUrls);
                                 lvImages.setAdapter(adapter);

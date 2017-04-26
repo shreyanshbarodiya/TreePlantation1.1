@@ -12,11 +12,12 @@ public class NearbyTreeConfig {
     public static String DIRECTORY_URL = URL_MAIN + "treeDirectory.php";
     public static String IMAGES_URL = URL_MAIN + "getImagesUrl.php";
     public static String ADOPT_TREE_URL = URL_MAIN + "adoptTree.php";
-
-
+    public static String TREE_THUMBNAILS = URL_MAIN + "getTreeThumbnails.php";
     public static final String KEY_URL_MAIN = "server";
 
+
     public static final String KEY_TREE_ID = "tree_id";
+
     public static final String KEY_USERNAME = "username";
     public static final String KEY_LATITUDE = "latitude";
     public static final String KEY_LONGITUDE = "longitude";
@@ -27,27 +28,26 @@ public class NearbyTreeConfig {
     public static final String KEY_REVIEW_DATE = "reviewed_on";
     public static final String KEY_REVIEW_NO = "review_no";
     public static final String KEY_REVIEW_RATINGS = "review_stars";
-
-
     public static final String KEY_ADOPTED_ON = "adopted_on";
+
+
     //KEYS FOR UPLOADING IMAGES
     public static final String KEY_NO_OF_IMAGES = "no_images";
     public static final String KEY_IMAGE_NUMBER = "image_number";
-
     public static final String KEY_CLICKED_ON = "clicked_on";
+
     //KEYS FOR GALLERY
     public static final String KEY_DIRECTORY_ID = "directory";
     public static final String KEY_IMAGE_URL = "image_url";
-
-
-
     public static final String IMAGES_FAILURE = "failure";
+
+
+
     public static final String KEY_UPLOADED_BY = "uploaded_by";
     public static final String PLANTED_FAILURE = "failure";
     public static final String PLANTED_SUCCESS = "Success";
     public static final String REVIEWED_SUCCESS = "Success";
     public static final String ADOPTED_SUCCESS = "Success";
-
     public static final String REVIEW_FAILURE = "failure";
 
     public static final String JSON_ARRAY = "result";
@@ -62,5 +62,7 @@ public class NearbyTreeConfig {
         DIRECTORY_URL = url + "treeDirectory.php";
         IMAGES_URL = url + "getImagesUrl.php";
         ADOPT_TREE_URL = url + "adoptTree.php";
+        TREE_THUMBNAILS = url + "getTreeThumbnails.php";
     }
+
 }
