@@ -59,9 +59,7 @@ public class UserProfile extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                startActivity(new Intent(UserProfile.this, NearbyTreesInterface.class));
+                startActivity(new Intent(UserProfile.this, NearbyTreesMap.class));
             }
         });
 
@@ -99,8 +97,8 @@ public class UserProfile extends AppCompatActivity
         btnSeeNearbyTrees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent reviewIntent = new Intent(UserProfile.this, NearbyTreesMap.class);
-                startActivity(reviewIntent);
+                Intent intent = new Intent(UserProfile.this, NearbyTreesInterface.class);
+                startActivity(intent);
             }
         });
 

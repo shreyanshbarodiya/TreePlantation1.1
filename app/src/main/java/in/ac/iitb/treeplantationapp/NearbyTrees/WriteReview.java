@@ -130,7 +130,8 @@ public class WriteReview extends AppCompatActivity {
                                                     String.valueOf(tree.getLatitude()), String.valueOf(tree.getLongitude()),
                                                     tree.getPlanted_on(), tree.getSpecies()};
                             notifyOwnerAboutReview(tree.getTree_id(), tree.getSpecies(), username);
-                            startActivity(addExtrasToIntent(detailsArray, SeeReviews.class));
+//                            startActivity(addExtrasToIntent(detailsArray, SeeReviews.class));
+
                         }
                         else{
                             Log.i("myTag", response);
@@ -175,6 +176,7 @@ public class WriteReview extends AppCompatActivity {
                         progressDialog.dismiss();
                         Log.i("myTag", response);
                         //Toast.makeText(ActivitySendPushNotification.this, response, Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {

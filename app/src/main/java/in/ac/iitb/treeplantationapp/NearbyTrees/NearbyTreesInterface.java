@@ -386,6 +386,7 @@ public class NearbyTreesInterface extends AppCompatActivity implements OnMapRead
                         loading.dismiss();
                         Log.i("myTag", "response after uploading " + s);
                         Toast.makeText(NearbyTreesInterface.this, "succesfully uploaded", Toast.LENGTH_LONG).show();
+                        getImageUrls(selectedTreeId);
                     }
                 },
                 new Response.ErrorListener() {
@@ -495,6 +496,11 @@ public class NearbyTreesInterface extends AppCompatActivity implements OnMapRead
             Toast.makeText(NearbyTreesInterface.this, "Cannot get your location",Toast.LENGTH_SHORT).show();
         }else{
             getNearbyTreeLocations(currLocation);
+        }
+
+        if(selectedTreeId!= null){
+            fetchReviewText(selectedTreeId);
+            getImageUrls(selectedTreeId);
         }
 
     }
