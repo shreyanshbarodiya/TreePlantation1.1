@@ -536,7 +536,7 @@ public class NearbyTreesInterface extends AppCompatActivity implements OnMapRead
 
         if (centerLocation != null)
         {
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(centerLocation.getLatitude(), centerLocation.getLongitude()), 15));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(centerLocation.getLatitude(), centerLocation.getLongitude()), googleMap.getCameraPosition().zoom));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(centerLocation.getLatitude(), centerLocation.getLongitude()))
