@@ -2,7 +2,7 @@ package in.ac.iitb.treeplantationapp.Configurations;
 
 public class LoginConfig {
 
-    public static String URL_SERVER = "192.168.0.107";
+    public static String URL_SERVER = "172.20.10.2";
     public static String URL_MAIN = "http://" + URL_SERVER + "/treePlantation/";
 
     public static String LOGIN_URL =  URL_MAIN + "userLogin.php";

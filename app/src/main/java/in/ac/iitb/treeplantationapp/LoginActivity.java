@@ -35,7 +35,7 @@ import in.ac.iitb.treeplantationapp.Notifications.SharedPrefManager;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText etServer;
+//    EditText etServer;
 
     EditText etUsername;
     EditText etPassword;
@@ -51,13 +51,12 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
         tvRegister = (TextView) findViewById(R.id.tvRegister);
-        etServer = (EditText) findViewById(R.id.etServer);
+//        etServer = (EditText) findViewById(R.id.etServer);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginConfig.setUrlServer(etServer.getText().toString());
-                //LoginConfig.URL_SERVER = etServer.getText().toString();
+                //LoginConfig.setUrlServer(etServer.getText().toString());
                 Log.i("myTag", LoginConfig.LOGIN_URL);
                 login();
             }
@@ -65,8 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginConfig.setUrlServer(etServer.getText().toString());
-                //LoginConfig.URL_SERVER = etServer.getText().toString();
+                //LoginConfig.setUrlServer(etServer.getText().toString());
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterUser.class);
                 startActivity(registerIntent);
             }
